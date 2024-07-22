@@ -6,9 +6,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "test": "jest --runInBand --passWithNoTests"
+    "test": "jest --runInBand --passWithNoTests",
+    "test:watch": "yarn test --watch"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.11",
     "jest": "^29.7.0",
@@ -16,5 +18,9 @@
     "ts-jest": "^29.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2"
   }
 }
