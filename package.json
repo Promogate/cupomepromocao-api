@@ -5,7 +5,7 @@
   "author": "Augusto Dias <gutodiasdev@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon src/main.ts",
     "migrate:dev": "ts-node src/infra/RunMigration.ts",
     "test": "jest --runInBand --passWithNoTests",
     "test:watch": "yarn test --watch"
