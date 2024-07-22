@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.ts",
+    "migrate:dev": "ts-node src/infra/RunMigration.ts",
     "test": "jest --runInBand --passWithNoTests",
     "test:watch": "yarn test --watch"
   },
