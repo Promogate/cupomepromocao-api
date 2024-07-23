@@ -50,4 +50,11 @@ describe("Stores Suite", () => {
     const result = await sut.execute(name);
     expect(result.name).toBe(name);
   });
+  it("should throw an error if no store is found", async () => {
+    const name = "any_name2";
+    const database = new StoreDatabaseMemory();
+    const storeDAO = new StoreDAO(database);
+    const sut = new FindStoreByNameService(storeDAO);
+    await expect(() => sut.execute(name)).rejects.toThrow("Nenhuma loja encontrada!");
+  });
 });

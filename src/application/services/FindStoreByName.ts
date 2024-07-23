@@ -7,6 +7,7 @@ export class FindStoreByNameService implements IFindStoreByName {
 
   async execute(name: string): Promise<Store> {
     const store = await this.storeDAO.findByName(name);
+    if (!store) throw new Error("Nenhuma loja encontrada!");
     return store;
   }
 }
