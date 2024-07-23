@@ -1,7 +1,8 @@
 import Sinon from "sinon";
-import { CreateStoreService } from "../src/application/services/CreateStoreService";
+import { CreateStoreService } from "../src/application/services/CreateStore";
 import { StoreDatabaseMemory } from "../src/database/memory/StoreDatabaseMemory";
 import { StoreDAO } from "../src/database/dao/Store";
+import { FindStoreByNameService } from "../src/application/services/FindStoreByName";
 
 describe("Stores Suite", () => {
   it("should call execute method with correct params", async () => {
@@ -10,6 +11,7 @@ describe("Stores Suite", () => {
       storeLink: "any_link"
     }
     const sutSpy = Sinon.spy(CreateStoreService.prototype, "execute");
+    const sutStub = Sinon.stub(StoreDAO.prototype, "findByName").resolves(undefined);
     const database = new StoreDatabaseMemory()
     const storeDAO = new StoreDAO(database);
     const sut = new CreateStoreService(storeDAO);
@@ -20,6 +22,7 @@ describe("Stores Suite", () => {
     })).toBeTruthy();
     expect(sutSpy.calledOnce).toBeTruthy();
     sutSpy.restore();
+    sutStub.restore();
   });
   it("should send an error if store name already exists", async () => {
     const input = {
@@ -38,5 +41,13 @@ describe("Stores Suite", () => {
     const sut = new CreateStoreService(storeDAO);
     await expect(() => sut.execute(input)).rejects.toThrow();
     storeDAOStub.restore();
+  });
+  it("should return a store with name as parameter", async () => {
+    const name = "any_name";
+    const database = new StoreDatabaseMemory();
+    const storeDAO = new StoreDAO(database);
+    const sut = new FindStoreByNameService(storeDAO);
+    const result = await sut.execute(name);
+    expect(result.name).toBe(name);
   });
 });
