@@ -11,7 +11,7 @@ type Input = {
   usage: number;
   destinationLink: string;
   expirationDate: string;
-  storeId: string;
+  providerId: string;
   promoCode?: string;
   offerMainMessage?: offer_main_message;
   isSponsored?: boolean;
@@ -43,7 +43,7 @@ export default class CreateOfferService {
           is_sponsored: body.isSpecial,
           offer_main_message: offerMainMessage,
           promo_code: body.promoCode,
-          store_id: body.storeId
+          provider_id: body.providerId
         }
       });
       return response.json({ message: "Oferta adicionada com sucesso" }).status(200);

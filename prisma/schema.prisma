@@ -31,7 +31,7 @@ model Store {
   about                    String
   has_cashback             Boolean @default(false)
   provider                 String?
-  provider_id              String?
+  provider_id              String? @unique
   cashback_amount          String?
   cashback_destination_url String?
   out_intent_offer         String?
@@ -56,8 +56,8 @@ model Offer {
   is_exclusive       Boolean  @default(false)
   cashback_amount    Int?
 
-  store    Store?  @relation(fields: [store_id], references: [id])
-  store_id String?
+  store       Store?  @relation(fields: [provider_id], references: [provider_id])
+  provider_id String?
 
   @@map("offers")
 }
