@@ -50,6 +50,8 @@ model Offer {
   expiration_date    DateTime
   promo_code         String?
   offer_main_message String?
+  campaign           String?
+  terms              String?
   is_sponsored       Boolean  @default(false)
   is_cashback        Boolean  @default(false)
   is_special         Boolean  @default(false)
