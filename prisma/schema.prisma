@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Configuration {
+  id                        String  @id
+  homepage_best_top_three   String?
+  homepage_thin_banner      String?
+  homepage_navigation_offer String?
+  top_bar_cta               String?
+
+  @@map("configurations")
+}
+
+model Store {
+  id                       String  @id
+  name                     String  @unique
+  thumbnail                String
+  thumbnail_background     String
+  about                    String
+  has_cashback             Boolean @default(false)
+  cashback_amount          String?
+  cashback_destination_url String?
+  out_intent_offer         String?
+
+  @@map("stores")
+}
+
+model Offer {
+  id                 String   @id
+  type               String
+  title              String
+  usage              Int
+  destination_link   String
+  expiration_date    DateTime
+  promo_code         String?
+  offer_main_message String?
+  is_sponsored       Boolean  @default(false)
+  is_cashback        Boolean  @default(false)
+  is_special         Boolean  @default(false)
+  is_exclusive       Boolean  @default(false)
+  cashback_amount    Int?
+
+  @@map("offers")
+}
