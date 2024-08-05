@@ -28,6 +28,7 @@ export type homepage_navigation_offer = {
 export type top_bar_cta = {
   message: string;
   cta: string;
+  destination_link: string;
 }
 
 export type out_intent_offer = {
