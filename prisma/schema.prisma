@@ -51,6 +51,7 @@ model Offer {
   promo_code         String?
   offer_main_message String?
   campaign           String?
+  cep_campaign       String[]
   terms              String?
   is_sponsored       Boolean  @default(false)
   is_cashback        Boolean  @default(false)

@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import express from "express";
 import "express-async-errors";
+import cors from "cors";
 import storeRoutes from "./infra/routes/Stores";
 import errorHandler from "./application/middlewares/ErrorHandler";
 import offersRoute from "./infra/routes/Offers";
@@ -12,6 +13,13 @@ config();
 const PORT = process.env.PORT;
 const app = express();
 app.use(bodyParser.json());
+app.use(cors({
+  origin: [
+    "https://cupomepromocao.com.br",
+    "https://www.cupomepromocao.com.br",
+    process.env.ENV === "development" && "http://localhost:5173"
+  ]
+}))
 
 app.use("/stores", storeRoutes);
 app.use("/offers", offersRoute);
