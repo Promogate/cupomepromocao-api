@@ -17,7 +17,7 @@ app.use(cors({
   origin: [
     "https://cupomepromocao.com.br",
     "https://www.cupomepromocao.com.br",
-    process.env.ENV === "development" && "http://localhost:5173"
+    process.env.MODE === "development" && "http://localhost:5173"
   ]
 }))
 
