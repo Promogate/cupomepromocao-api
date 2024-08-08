@@ -19,6 +19,7 @@ export default class ImportAwinCouponsFromCSVService {
               expiration_date: coupon.expiration_date,
               type: coupon.type,
               usage: coupon.usage,
+              promo_code: coupon.promo_code,
               store: {
                 connect: {
                   provider_id: coupon.provider_id

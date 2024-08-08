@@ -9,8 +9,8 @@ const importAwinPromotionsFromCSVService = new ImportAwinPromotionsFromCSVServic
 const importAwinCouponsFromCSVService = new ImportAwinCouponsFromCSVService();
 const importAwinStroresFromCSVSerice = new ImportAwinStoresFromCSVService()
 
-documentsRouter.post("/awin/promotions/import_from_csv", bodyParser.text({ type: "text/csv" }), importAwinPromotionsFromCSVService.execute);
-documentsRouter.post("/awin/coupons/import_from_csv", bodyParser.text({ type: "text/csv" }), importAwinCouponsFromCSVService.execute);
-documentsRouter.post("/awin/stores/import_from_csv", bodyParser.text({ type: "text/csv" }), importAwinStroresFromCSVSerice.execute);
+documentsRouter.post("/awin/promotions/import_from_csv", bodyParser.text({ type: "text/csv", limit: "50mb" }), importAwinPromotionsFromCSVService.execute);
+documentsRouter.post("/awin/coupons/import_from_csv", bodyParser.text({ type: "text/csv", limit: "50mb" }), importAwinCouponsFromCSVService.execute);
+documentsRouter.post("/awin/stores/import_from_csv", bodyParser.text({ type: "text/csv", limit: "50mb" }), importAwinStroresFromCSVSerice.execute);
 
 export default documentsRouter;
