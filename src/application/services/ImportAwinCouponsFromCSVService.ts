@@ -8,11 +8,29 @@ export default class ImportAwinCouponsFromCSVService {
     try {
       const body = request.body;
       const json = await csv().fromString(body);
-      const parsedOffers = AwinCouponCSVAdapter.parse(json);
-      await prisma.offer.createMany({
-        skipDuplicates: true,
-        data: parsedOffers
+      const parsedCoupons = AwinCouponCSVAdapter.parse(json);
+      const promises = parsedCoupons.map(async (coupon) => {
+        try {
+          await prisma.offer.create({
+            data: {
+              id: coupon.id,
+              title: coupon.title,
+              destination_link: coupon.destination_link,
+              expiration_date: coupon.expiration_date,
+              type: coupon.type,
+              usage: coupon.usage,
+              store: {
+                connect: {
+                  provider_id: coupon.provider_id
+                }
+              }
+            }
+          })
+        } catch (error: any) {
+          console.log(error);
+        }
       })
+      await Promise.all(promises);
       return response.json({ message: "Coupons Awin adicionados com sucesso"}).status(200);
     } catch (error: any) {
       console.error(error.stack)

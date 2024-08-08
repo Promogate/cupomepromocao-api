@@ -1,4 +1,3 @@
-import DateAdapter from "../lib/DateAdapter";
 import generateID from "../lib/generateID";
 import { removeBrSuffix } from "../lib/removeBRSuffix";
 
