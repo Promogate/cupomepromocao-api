@@ -7,7 +7,12 @@ export default class ImportAwinStoresFromCSVService {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const body = request.body;
-      const json = await csv({ delimiter: ";" }).fromString(body);
+      const query = request.query as { delimiter: string; }
+      const delimiter: Record<string, string> =  {
+        comma: ",",
+        semi: ";"
+      }
+      const json = await csv({ delimiter: delimiter[query.delimiter] }).fromString(body);
       const parsedStores = AwinStoresCSVAdapter.parse(json);
       const promises = parsedStores.map(async (store) => {
         try {
