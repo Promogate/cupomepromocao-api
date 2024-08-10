@@ -14,6 +14,7 @@ export default class GetOffersByCampaignService {
               hasSome: [campaign]
             }
           },
+          take: 10,
           include: {
             store: true
           }
