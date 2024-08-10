@@ -18,7 +18,8 @@ export default class AwinCouponCSVAdapter {
         provider_id: coupon["Advertiser ID"],
         title: coupon.Title,
         campaign: coupon.Campaign,
-        terms: coupon.Terms
+        terms: coupon.Terms,
+        provider_offer_id: coupon["Promotion ID"]
       })
     });
     return coupons;
@@ -58,4 +59,5 @@ export type Coupon = {
   provider_id: string;
   campaign: string;
   terms: string;
+  provider_offer_id: string;
 }

@@ -15,7 +15,8 @@ export default class AwinPromotionCSVAdapter {
         destination_link: offer["Deeplink Tracking"],
         expiration_date: expirationDate,
         provider_id: offer["Advertiser ID"],
-        title: offer.Title
+        title: offer.Title,
+        provider_offer_id: offer["Promotion ID"]
       })
     });
     return offers;
@@ -52,4 +53,5 @@ export type Offer = {
   usage: number;
   title: string;
   provider_id: string;
+  provider_offer_id: string;
 }

@@ -7,10 +7,20 @@ export default class ImportAwinPromotionsFromCSVService {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const body = request.body;
-      const json = await csv().fromString(body);
+      const query = request.query as { delimiter: string; }
+      const delimiter: Record<string, string> = {
+        comma: ",",
+        semi: ";"
+      }
+      const json = await csv({ delimiter: delimiter[query.delimiter] }).fromString(body);
       const parsedOffers = AwinPromotionCSVAdapter.parse(json);
       const promises = parsedOffers.map(async (offer) => {
         try {
+          const found = await prisma.offer.findFirst({ where: { provider_offer_id: offer.provider_offer_id } });
+          if (found) {
+            console.log(`Promoção ${found.provider_offer_id} já cadastrada`);
+            return;
+          }
           await prisma.offer.create({
             data: {
               id: offer.id,
@@ -19,6 +29,7 @@ export default class ImportAwinPromotionsFromCSVService {
               expiration_date: offer.expiration_date,
               type: offer.type,
               usage: offer.usage,
+              provider_offer_id: offer.provider_offer_id,
               store: {
                 connect: {
                   provider_id: offer.provider_id
@@ -31,7 +42,7 @@ export default class ImportAwinPromotionsFromCSVService {
         }
       })
       await Promise.all(promises);
-      return response.json({ message: "CSV sincronizado" }).status(200);
+      return response.json({ message: "Promoções sincronizadas" }).status(200);
     } catch (error: any) {
       console.error(error)
       return response.json({ message: error.message }).status(500);

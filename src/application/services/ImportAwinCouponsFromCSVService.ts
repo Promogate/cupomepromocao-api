@@ -7,10 +7,20 @@ export default class ImportAwinCouponsFromCSVService {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const body = request.body;
-      const json = await csv().fromString(body);
+      const query = request.query as { delimiter: string; }
+      const delimiter: Record<string, string> = {
+        comma: ",",
+        semi: ";"
+      }
+      const json = await csv({ delimiter: delimiter[query.delimiter] }).fromString(body);
       const parsedCoupons = AwinCouponCSVAdapter.parse(json);
       const promises = parsedCoupons.map(async (coupon) => {
         try {
+          const found = await prisma.offer.findFirst({ where: { provider_offer_id: coupon.provider_offer_id } });
+          if (found) {
+            console.log(`Cupom ${coupon.provider_offer_id} já cadastrada`);
+            return;
+          }
           await prisma.offer.create({
             data: {
               id: coupon.id,
@@ -20,6 +30,7 @@ export default class ImportAwinCouponsFromCSVService {
               type: coupon.type,
               usage: coupon.usage,
               promo_code: coupon.promo_code,
+              provider_offer_id: coupon.provider_offer_id,
               store: {
                 connect: {
                   provider_id: coupon.provider_id
