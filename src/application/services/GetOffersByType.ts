@@ -1,4 +1,4 @@
-import { request, Request, response, Response } from "express";
+import type { Request, Response } from "express";
 import prisma from "../lib/prisma";
 
 export default class GetOffersByTypeService {
@@ -7,11 +7,11 @@ export default class GetOffersByTypeService {
       const query = request.query as { type: string };
       const offers = await prisma.offer.findMany({
         where: {
-          type: query.type
+          type: query.type,
         },
         include: {
-          store: true
-        }
+          store: true,
+        },
       });
       return response.json({ offers }).status(200);
     } catch (error: any) {
