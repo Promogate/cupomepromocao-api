@@ -20,14 +20,12 @@ export default class CreateStoreV2Service {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const body = request.body as Input;
-      const id = generateID();
       const treatedstoreName = removeBrSuffix(body.name)
       console.log(body);
       const store = await prisma.store.findUnique({ where: { provider_id: body.providerId } });
       if (store) return response.json({ message: "Loja já cadastrada" }).status(422);
       await prisma.store.create({
         data: {
-          id: id,
           name: treatedstoreName,
           about: body.about,
           thumbnail: body.thumbnail,

@@ -1,17 +1,6 @@
 -- CreateTable
-CREATE TABLE "configurations" (
-    "id" TEXT NOT NULL,
-    "homepage_best_top_three" TEXT,
-    "homepage_thin_banner" TEXT,
-    "homepage_navigation_offer" TEXT,
-    "top_bar_cta" TEXT,
-
-    CONSTRAINT "configurations_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "stores" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "thumbnail" TEXT NOT NULL,
     "thumbnail_background" TEXT NOT NULL,
@@ -28,7 +17,7 @@ CREATE TABLE "stores" (
 
 -- CreateTable
 CREATE TABLE "offers" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "type" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "usage" INTEGER NOT NULL,
@@ -39,6 +28,7 @@ CREATE TABLE "offers" (
     "campaign" TEXT,
     "cep_campaign" TEXT[],
     "terms" TEXT,
+    "provider_offer_id" TEXT,
     "is_sponsored" BOOLEAN NOT NULL DEFAULT false,
     "is_cashback" BOOLEAN NOT NULL DEFAULT false,
     "is_special" BOOLEAN NOT NULL DEFAULT false,

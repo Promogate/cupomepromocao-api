@@ -23,7 +23,6 @@ export default class ImportAwinStoresFromCSVService {
           }
           await prisma.store.create({
             data : {
-              id: store.id,
               name: store.name,
               about:store.about,
               thumbnail: store.thumbnail,

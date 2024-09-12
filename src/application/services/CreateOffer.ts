@@ -25,12 +25,10 @@ export default class CreateOfferService {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const body = request.body as Input;
-      const id = generateID();
       const offerMainMessage = body.offerMainMessage ? JSON.stringify(body.offerMainMessage) : "";
       const expirationDate = DateAdapter.formatStringToDate(body.expirationDate);
       await prisma.offer.create({
         data: {
-          id: id,
           type: body.type,
           destination_link: body.destinationLink,
           expiration_date: expirationDate,

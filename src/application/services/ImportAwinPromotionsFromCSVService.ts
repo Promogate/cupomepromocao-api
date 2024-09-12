@@ -23,7 +23,6 @@ export default class ImportAwinPromotionsFromCSVService {
           }
           await prisma.offer.create({
             data: {
-              id: offer.id,
               title: offer.title,
               destination_link: offer.destination_link,
               expiration_date: offer.expiration_date,

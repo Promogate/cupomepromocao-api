@@ -7,7 +7,6 @@ import errorHandler from "./application/middlewares/ErrorHandler";
 import offersRoute from "./infra/routes/Offers";
 import importerRouter from "./infra/routes/Importer";
 import bodyParser from "body-parser";
-import configurationRoutes from "./infra/routes/Configuration";
 
 config();
 const PORT = process.env.PORT;
@@ -24,7 +23,6 @@ app.use(cors({
 app.use("/stores", storeRoutes);
 app.use("/offers", offersRoute);
 app.use("/importer", importerRouter);
-app.use("/configuration", configurationRoutes);
 
 app.use(errorHandler);
 app.listen(PORT, () => console.log("Working on port: " + PORT));

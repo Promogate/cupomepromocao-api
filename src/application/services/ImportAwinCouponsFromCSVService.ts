@@ -23,7 +23,6 @@ export default class ImportAwinCouponsFromCSVService {
           }
           await prisma.offer.create({
             data: {
-              id: coupon.id,
               title: coupon.title,
               destination_link: coupon.destination_link,
               expiration_date: coupon.expiration_date,

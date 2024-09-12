@@ -5,10 +5,11 @@ export default class FindOutOfferByIDService {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const params = request.params as { offerId: string };
-      const offer = await prisma.offer.findUnique({ where: { id: params.offerId }, include: { store: true } });
+      const id = Number(params.offerId);
+      const offer = await prisma.offer.findUnique({ where: { id: id }, include: { store: true } });
       if (!offer) return response.json({ message: "Oferta não encontrata" }).status(404);
       await prisma.offer.update({
-        where: { id: params.offerId },
+        where: { id: id },
         data: { usage: offer.usage += 1 }
       })
       return response.json({ offer }).status(200);
