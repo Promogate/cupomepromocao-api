@@ -14,6 +14,9 @@ model Offer {
   usage              Int
   destination_link   String
   expiration_date    DateTime
+  price              Decimal?
+  old_price          Decimal?
+  discount_amount    String?
   offer_image        String?
   promo_code         String?
   offer_main_message String?
