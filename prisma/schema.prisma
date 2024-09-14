@@ -7,24 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Store {
-  id                       Int     @id @default(autoincrement())
-  name                     String  @unique
-  thumbnail                String
-  thumbnail_background     String
-  about                    String
-  has_cashback             Boolean @default(false)
-  provider                 String?
-  provider_id              String  @unique
-  cashback_amount          String?
-  cashback_destination_url String?
-  out_intent_offer         String?
-
-  offers Offer[]
-
-  @@map("stores")
-}
-
 model Offer {
   id                 Int      @id @default(autoincrement())
   type               String
@@ -38,15 +20,12 @@ model Offer {
   campaign           String?
   cep_campaign       String[]
   terms              String?
-  provider_offer_id  String?
+  provider           String?
   is_sponsored       Boolean  @default(false)
   is_cashback        Boolean  @default(false)
   is_special         Boolean  @default(false)
   is_exclusive       Boolean  @default(false)
   cashback_amount    Int?
-
-  store       Store  @relation(fields: [provider_id], references: [provider_id])
-  provider_id String
 
   @@map("offers")
 }
