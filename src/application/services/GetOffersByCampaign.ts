@@ -14,10 +14,7 @@ export default class GetOffersByCampaignService {
               hasSome: [campaign]
             }
           },
-          take: 10,
-          include: {
-            store: true
-          }
+          take: 10
         });
         data.push(...offers);
       });

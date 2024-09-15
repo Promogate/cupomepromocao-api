@@ -2,7 +2,6 @@ import { config } from "dotenv";
 import express from "express";
 import "express-async-errors";
 import cors from "cors";
-import storeRoutes from "./infra/routes/Stores";
 import errorHandler from "./application/middlewares/ErrorHandler";
 import offersRoute from "./infra/routes/Offers";
 import importerRouter from "./infra/routes/Importer";
@@ -20,7 +19,6 @@ app.use(cors({
   ]
 }))
 
-app.use("/stores", storeRoutes);
 app.use("/offers", offersRoute);
 app.use("/importer", importerRouter);
 

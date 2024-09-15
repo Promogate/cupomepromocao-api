@@ -8,10 +8,7 @@ export default class GetOffersByTypeService {
       const offers = await prisma.offer.findMany({
         where: {
           type: query.type,
-        },
-        include: {
-          store: true,
-        },
+        }
       });
       return response.json({ offers }).status(200);
     } catch (error: any) {

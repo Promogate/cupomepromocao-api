@@ -1,46 +1,49 @@
 import { Request, Response } from "express";
-import { offer_main_message } from "../@types";
-import prisma from "../lib/prisma";
-import generateID from "../lib/generateID";
+import prisma from "../../lib/prisma";
+import DateAdapter from "../../lib/DateAdapter";
 import dayjs from "dayjs";
-import DateAdapter from "../lib/DateAdapter";
 
 type Input = {
   type: string;
   title: string;
-  usage: number;
   destinationLink: string;
   expirationDate: string;
-  providerId: string;
+  offerImage: string;
   promoCode?: string;
-  offerMainMessage?: offer_main_message;
+  provider: string;
+  price: string;
+  oldPrice: string;
+  discountAmount: string;
+  cashbackAmount?: number;
   isSponsored?: boolean;
   isCashback?: boolean;
   isSpecial?: boolean;
   isExclusive?: boolean;
-  cashbackAmount?: number;
 }
 
-export default class CreateOfferService {
+export default class CreateOfferServiceV2 {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const body = request.body as Input;
-      const offerMainMessage = body.offerMainMessage ? JSON.stringify(body.offerMainMessage) : "";
-      const expirationDate = DateAdapter.formatStringToDate(body.expirationDate);
+      const usage = Math.floor(Math.random() * 100);
       await prisma.offer.create({
         data: {
           type: body.type,
-          destination_link: body.destinationLink,
-          expiration_date: expirationDate,
           title: body.title,
-          usage: body.usage,
+          destination_link: body.destinationLink,
+          expiration_date: body.expirationDate,
+          offer_image: body.offerImage,
+          promo_code: body.promoCode,
+          provider: body.provider,
+          price: body.price,
+          old_price: body.oldPrice,
+          discount_amount: body.discountAmount,
           cashback_amount: body.cashbackAmount,
           is_cashback: body.isCashback,
           is_exclusive: body.isExclusive,
           is_special: body.isSpecial,
           is_sponsored: body.isSpecial,
-          offer_main_message: offerMainMessage,
-          promo_code: body.promoCode,
+          usage: usage
         }
       });
       return response.json({ message: "Oferta adicionada com sucesso" }).status(200);

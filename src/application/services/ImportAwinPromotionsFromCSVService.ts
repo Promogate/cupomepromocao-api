@@ -16,24 +16,13 @@ export default class ImportAwinPromotionsFromCSVService {
       const parsedOffers = AwinPromotionCSVAdapter.parse(json);
       const promises = parsedOffers.map(async (offer) => {
         try {
-          const found = await prisma.offer.findFirst({ where: { provider_offer_id: offer.provider_offer_id } });
-          if (found) {
-            console.log(`Promoção ${found.provider_offer_id} já cadastrada`);
-            return;
-          }
           await prisma.offer.create({
             data: {
               title: offer.title,
               destination_link: offer.destination_link,
               expiration_date: offer.expiration_date,
               type: offer.type,
-              usage: offer.usage,
-              provider_offer_id: offer.provider_offer_id,
-              store: {
-                connect: {
-                  provider_id: offer.provider_id
-                }
-              }
+              usage: offer.usage
             },
           })
         } catch (error: any) {

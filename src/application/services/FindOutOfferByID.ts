@@ -6,7 +6,7 @@ export default class FindOutOfferByIDService {
     try {
       const params = request.params as { offerId: string };
       const id = Number(params.offerId);
-      const offer = await prisma.offer.findUnique({ where: { id: id }, include: { store: true } });
+      const offer = await prisma.offer.findUnique({ where: { id: id } });
       if (!offer) return response.json({ message: "Oferta não encontrata" }).status(404);
       await prisma.offer.update({
         where: { id: id },
